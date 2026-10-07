@@ -1,0 +1,30 @@
+{
+  "model": "gemma3:4b",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Tu es rédacteur web pour une rédaction. À partir du brief fourni, tu rédiges directement un article complet d'environ 300 mots, sans jamais demander de précisions.\nTu réponds uniquement avec un objet JSON contenant deux champs :\n- \"titre\" : le titre de l'article, en texte simple ;\n- \"contenu\" : le corps de l'article en HTML, avec uniquement des balises <p> pour les paragraphes et <h2> pour les intertitres.\nRègles :\n- Écris dans la langue indiquée dans le brief et respecte le ton demandé.\n- Utilise le mot-clé deux ou trois fois, de façon naturelle.\n- Reste sur des informations générales et reconnues : ne cite aucune étude, statistique ni source.\n- Le texte ne contient ni émoji ni mise en forme autre que les balises <p> et <h2>."
+    },
+    {
+      "role": "user",
+      "content": "Sujet : les bienfaits de la marche quotidienne\nMot-clé : marche à pied\nTon : conversationnel et bienveillant\nLangue : français\nConsigne : termine par un conseil pratique"
+    }
+  ],
+  "format": {
+    "type": "object",
+    "properties": {
+      "titre": {
+        "type": "string"
+      },
+      "contenu": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "titre",
+      "contenu"
+    ]
+  },
+  "stream": false,
+  "think": false
+}
