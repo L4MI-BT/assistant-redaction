@@ -11,13 +11,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! defined( 'ASSISTANT_REDACTION_OLLAMA_URL') ) {
-    define( 'ASSISTANT_REDACTION_OLLAMA_URL', 'http://localhost:11434');
+if ( ! defined( 'ASSREDAC_OLLAMA_URL') ) {
+    define( 'ASSREDAC_OLLAMA_URL', 'http://localhost:11434');
 }
-if ( ! defined( 'ASSISTANT_REDACTION_MODEL') ) {
-    define( 'ASSISTANT_REDACTION_MODEL', 'gemma3:4b');
+if ( ! defined( 'ASSREDAC_MODEL') ) {
+    define( 'ASSREDAC_MODEL', 'gemma3:4b');
 }
-if ( ! defined( 'ASSISTANT_REDACTION_TIMEOUT') ) {
-    define( 'ASSISTANT_REDACTION_TIMEOUT', '120');
+if ( ! defined( 'ASSREDAC_TIMEOUT') ) {
+    define( 'ASSREDAC_TIMEOUT', '120');
 }
 
