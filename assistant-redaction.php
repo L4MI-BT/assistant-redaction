@@ -7,6 +7,9 @@
  * Author URI:        https://lucasblanchardtoulet.fr
  */
 
+require_once('includes/class-assredac-ollama-client.php');
+require_once('includes/class-article-generator.php');
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
@@ -20,4 +23,3 @@ if ( ! defined( 'ASSREDAC_MODEL') ) {
 if ( ! defined( 'ASSREDAC_TIMEOUT') ) {
     define( 'ASSREDAC_TIMEOUT', '120');
 }
-
