@@ -7,8 +7,10 @@
  * Author URI:        https://lucasblanchardtoulet.fr
  */
 
-require_once('includes/class-assredac-ollama-client.php');
-require_once('includes/class-article-generator.php');
+require_once plugin_dir_path( __FILE__ ) . 'includes/class-assredac-ollama-client.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/class-assredac-article-generator.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/class-assredac-admin-page.php';
+
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -23,3 +25,10 @@ if ( ! defined( 'ASSREDAC_MODEL') ) {
 if ( ! defined( 'ASSREDAC_TIMEOUT') ) {
     define( 'ASSREDAC_TIMEOUT', '120');
 }
+
+// Assemblage : la page reçoit le générateur, qui reçoit le client.
+$assredac_client    = new ASSREDAC_Ollama_Client();
+$assredac_generator = new ASSREDAC_Article_Generator( $assredac_client );
+$assredac_admin     = new ASSREDAC_Admin_Page( $assredac_generator );
+
+add_action( 'admin_menu', array( $assredac_admin, 'register_menu' ) );
