@@ -20,6 +20,7 @@ class ASSREDAC_Article_Generator {
 		),
 		'required'   => array( 'titre', 'contenu' ),
 	); 
+	
 	private const MIN_WORDS = 100;
 	private const ALLOWED_TAGS = array(
 		'p'  => array(),  //Clé = tags autorisé, valeurs = listes des attribue autorisé. Tab vide = aucun atrribut
@@ -102,9 +103,9 @@ class ASSREDAC_Article_Generator {
         }
 
         //Vérifie que c'est bien du JSON retourner
-        $article = json_decode(wp_remote_retrieve_body($response['message']['content']), true);
+        $article = json_decode($response['message']['content'], true);
         if ( !is_array($article)){
-            return new WP_Error('assredac_invalid_json', "La réponse d'Ollama est illisible ");
+            return new WP_Error('assredac_invalid_json', "L'article généré n'est pas au format attendu. Réessayez. ");
         }
 
         //Vérifie que les champs titre et contenu sont existant et non vide
@@ -120,7 +121,7 @@ class ASSREDAC_Article_Generator {
 		);
     }     
 
-	private function clean_article( $article ) {
+	public function clean_article( $article ) {
 		$titre = sanitize_text_field($article['titre']);
 
 		$contenu = wp_kses($article['contenu'], self::ALLOWED_TAGS);
