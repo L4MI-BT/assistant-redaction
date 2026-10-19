@@ -596,3 +596,34 @@ Alors, cette semaine, pourquoi ne pas essayer de marcher un peu plus ? Pas besoi
 |Serveur LLM dédié|	Ollama sur une autre machine (avec GPU), appelée via son adresse sur le réseau interne|	Le site reste léger|Il faut sécuriser : Ollama n'a aucune authentification par défaut, il ne doit jamais être exposé sur Internet (réseau privé, pare-feu, ou serveur intermédiaire avec authentification et HTTPS); pas possible dans on cas, je nais pas de deuxième serveur/machine|
 |API cloud (OpenAI, Anthropic, Mistral…)	|Appel à l'API d'un fournisseur, avec une clé|	Rapide, puissant, aucune machine à gérer|	Payant à l'usage ; les textes sortent de l'entreprise (confidentialité, RGPD) ; dépendance au fournisseur ; une clé secrète à protéger; pas demandé pour ce test|
 |Hébergeurs de modèles ouverts	|Des services qui font tourner des modèles open source (Llama, Mistral, Gemma…) et les exposent via une API	|Entre les deux : modèles ouverts, sans machine à gérer	|Mêmes questions de coût et de confidentialité que le cloud|
+
+
+---
+### Appel ollama : 
+à faire
+
+### création du prompt : 
+à faire
+
+### Page admin : 
+Deux écrans : le formulaire, puis la relecture. Ensuite, l’éditeur de WordPress.
+Trois boutons sur la relecture : régénérer avec le même brief, modifier le brief, et modifier dans l’éditeur (qui crée le brouillon).
+Les données passent par des champs cachés, revalidées à leur réception.
+La sécurité : la capacité edit_posts, et un nonce.
+La validation se fait côté serveur, et le formulaire se réaffiche pré-rempli en cas d’erreur.
+Le traitement est synchrone, avec un petit JS d’attente.
+
+Requête sur la page
+      │
+      ▼
+1. TRAITER (avant tout affichage)
+   Vérifier les droits et le nonce, identifier le bouton cliqué,
+   valider, générer, ou créer le brouillon puis rediriger.
+   → mémorise le résultat : quel écran afficher, et avec quelles données.
+      │
+      ▼
+2. AFFICHER
+   Afficher le formulaire ou la relecture, selon ce qui a été mémorisé.
+
+Limite notable : un sujet de 10 000 caratère poserai deux problème : Le délai (ta réponse) : 10 000 caractères, c’est environ 2 900 tokens. À environ 40 tokens par seconde de lecture, ça fait plus d’une minute, avant même la minute de génération. Total : au-delà de 120 secondes.
+La fenêtre de contexte : souviens-toi de Qwen, coupé à 108 + 3 988 = 4 096 tokens. Avec une consigne de 2 900 tokens, il ne resterait qu’environ 900 tokens pour la réponse. Ça passe de justesse pour un article court, mais avec une consigne un peu plus longue, la réponse serait coupée. Ton contrôle de done_reason le détecterait. Pire : je ne suis pas sûr de ce que fait Ollama quand le prompt lui-même dépasse la fenêtre, mais il pourrait en couper le début, c’est-à-dire tes consignes système.
